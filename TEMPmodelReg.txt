@@ -1,0 +1,35 @@
+
+  # Standardize the data:
+  data {
+  
+  # Specify the priors for original beta parameters
+  # Prior locations to reflect the expert information
+  mu0 <- mean(y) # Set to overall mean a priori based on the interpretation of constant term in regression
+  mu[1:Nx] <- rep(0,Nx)
+  
+  # Prior variances to reflect the expert information    
+  Var0 <- 1E+6 
+  Var[1:Nx] <- rep(1E+6,Nx)
+  
+  }
+
+  # Specify the model for data:
+  model {
+  for ( i in 1:Ntotal ) {
+  y[i] ~ dnorm( beta0 + sum( beta[1:Nx] * x[i,1:Nx] ) , 1/sigma^2 )
+  }
+  
+  # Priors vague on standardized scale:
+  beta0 ~ dnorm( mu0 , 1/Var0 )  
+  for ( j in 1:Nx ) {
+  beta[j] ~ dnorm( mu[j] , 1/Var[j] )
+  }
+  sigma ~ dunif( 1.0E-5 , 5E+1 )
+  
+  
+  # Compute predictions at every step of the MCMC
+  pred[1:Npred] <- beta0 + beta[1] * xPred[1:Npred,1] + beta[2] * xPred[1:Npred,2] + beta[3] * xPred[1:Npred,3] + beta[4] * xPred[1:Npred,4] 
+  + beta[5] * xPred[1:Npred,5]
+  
+  }
+  
