@@ -116,8 +116,8 @@ genMCMC = function( data , xName="x" , yName="y" ,
   # RUN THE CHAINS
   parameters = c( "beta0" ,  "beta" ,  "sigma", 
                   "zbeta0" , "zbeta" , "zsigma", "pred" )
-  adaptSteps = 1000  # Number of steps to "tune" the samplers
-  burnInSteps = 1000
+  adaptSteps = 5000  # Number of steps to "tune" the samplers
+  burnInSteps = 5000
   runJagsOut <- run.jags( method=runjagsMethod ,
                           model="TEMPmodelReg.txt" , 
                           monitor=parameters , 

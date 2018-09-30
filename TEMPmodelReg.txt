@@ -1,31 +1,58 @@
 
   # Standardize the data:
   data {
+  ym <- mean(y)
+  ysd <- sd(y)
+  for ( i in 1:Ntotal ) {
+  zy[i] <- ( y[i] - ym ) / ysd
+  }
+  for ( j in 1:Nx ) {
+  xm[j]  <- mean(x[,j])
+  xsd[j] <-   sd(x[,j])
+  for ( i in 1:Ntotal ) {
+  zx[i,j] <- ( x[i,j] - xm[j] ) / xsd[j]
+  }
+  }
+  
   
   # Specify the priors for original beta parameters
   # Prior locations to reflect the expert information
-  mu0 <- mean(y) # Set to overall mean a priori based on the interpretation of constant term in regression
+  mu0 <- ym # Set to overall mean a priori based on the interpretation of constant term in regression
   mu[1:Nx] <- rep(0,Nx)
   
   # Prior variances to reflect the expert information    
   Var0 <- 1E+6 
   Var[1:Nx] <- rep(1E+6,Nx)
   
+  
+  # Compute corresponding prior means and variances for the standardised parameters
+  muZ[1:Nx] <-  mu[1:Nx] * xsd[1:Nx] / ysd 
+  
+  muZ0 <- (mu0 + sum( mu[1:Nx] * xm[1:Nx] / xsd[1:Nx] )*ysd - ym) / ysd 
+  
+  # Compute corresponding prior variances and variances for the standardised parameters
+  VarZ[1:Nx] <- Var[1:Nx] * ( xsd[1:Nx]/ ysd )^2
+  VarZ0 <- Var0 / (ysd^2)
+  
   }
-
-  # Specify the model for data:
+  # Specify the model for standardized data:
   model {
   for ( i in 1:Ntotal ) {
-  y[i] ~ dnorm( beta0 + sum( beta[1:Nx] * x[i,1:Nx] ) , 1/sigma^2 )
+  zy[i] ~ dnorm( zbeta0 + zbeta[1] * x[i,1] + zbeta[2] * zx[i,2] + sum( zbeta[3:Nx] * x[i,3:Nx] ) , 1/zsigma^2 )
   }
   
   # Priors vague on standardized scale:
-  beta0 ~ dnorm( mu0 , 1/Var0 )  
+  zbeta0 ~ dnorm( muZ0 , 1/VarZ0 )  
   for ( j in 1:Nx ) {
-  beta[j] ~ dnorm( mu[j] , 1/Var[j] )
+  zbeta[j] ~ dnorm( muZ[j] , 1/VarZ[j] )
   }
-  sigma ~ dunif( 1.0E-5 , 5E+1 )
+  zsigma ~ dunif( 1.0E-5 , 5E+1 )
   
+  
+  # Transform to original scale:
+  beta[1:Nx] <- ( zbeta[1:Nx] / xsd[1:Nx] )*ysd
+  beta0 <- zbeta0*ysd  + ym - sum( zbeta[1:Nx] * xm[1:Nx] / xsd[1:Nx] )*ysd
+  sigma <- zsigma*ysd
   
   # Compute predictions at every step of the MCMC
   pred[1:Npred] <- beta0 + beta[1] * xPred[1:Npred,1] + beta[2] * xPred[1:Npred,2] + beta[3] * xPred[1:Npred,3] + beta[4] * xPred[1:Npred,4] 
