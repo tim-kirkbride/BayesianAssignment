@@ -74,7 +74,7 @@ genMCMC = function( data , xName="x" , yName="y" ,
   # Specify the model for standardized data:
   model {
   for ( i in 1:Ntotal ) {
-  zy[i] ~ dnorm( zbeta0 + zbeta[1] * x[i,1] + zbeta[2] * zx[i,2] + sum( zbeta[3:Nx] * x[i,3:Nx] ) , 1/zsigma^2 )
+  zy[i] ~ dnorm( zbeta0 + zbeta[1] * zx[i,1] + sum( zbeta[2:Nx] * x[i,2:Nx] ) , 1/zsigma^2 )
   }
   
   # Priors vague on standardized scale:

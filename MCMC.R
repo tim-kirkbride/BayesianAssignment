@@ -23,14 +23,20 @@ xName = names(bf)[-3]
 # all variables minus Purch_Avg, years in city, marital status
 xName2 = names(bf)[-c(1,3,11:14)]
 
-# get train and test data
+# get train and test data (for xName)
 set.seed(123)
 random_rows = sample(nrow(bf),10)
-test_bf = as.matrix(bf[random_rows,-c(1,3,11:14)]) # keep only independent variables used in xName2
+test_bf = as.matrix(bf[random_rows,]) # keep only independent variables used in xName2
+train_bf = bf[-random_rows,]
+
+# get train and test data (for xName2)
+set.seed(123)
+random_rows = sample(nrow(bf),10)
+test_bf = as.matrix(bf[random_rows,-c(1,11:14)]) # keep only independent variables used in xName2
 train_bf = bf[-random_rows,]
 
 reg_chains = genMCMC(train_bf, xName = xName2, yName = "Purch_Avg",
-                     numSavedSteps = 100000, xPred = test_bf, thinSteps = 15)
+                     numSavedSteps = 100000, xPred = test_bf[,-2], thinSteps = 15)
 
 
 
@@ -48,4 +54,18 @@ plotMCMC( reg_chains , data=bf , xName=xName2 , yName="Purch_Avg" ,
           pairsPlot=TRUE , showCurve=FALSE )
 #------------------------------------------------------------------------------- 
 
-#saveRDS(reg_chains,file = "Chain Objects/Script2_100000steps_15thin_5000adapt_5000burn_xName2_TEST-TRAIN.rds")
+#saveRDS(reg_chains,file = "Chain Objects/Script2_100000steps_15thin_5000adapt_5000burn_xName_TEST-TRAIN.rds")
+
+
+
+# extracting prediction info and finding MSE
+model_predictions = summaryInfo[c("pred[1]","pred[2]","pred[3]","pred[4]",
+                                  "pred[5]","pred[6]","pred[7]","pred[8]",
+                                  "pred[9]","pred[10]"), c("Mode","HDIlow","HDIhigh")]
+
+model_predictions = as.data.frame(cbind(test_bf[,2], model_predictions))
+colnames(model_predictions)[1:2] = c("Actual","Prediction") 
+
+model_predictions$Error = model_predictions$Actual - model_predictions$Prediction
+
+MSE = mean(model_predictions$Error^2)
