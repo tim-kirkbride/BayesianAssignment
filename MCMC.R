@@ -13,22 +13,8 @@ source('MCMC Functions/DBDA2E-utilities.R')
 
 library(rjags)
 
-# made up prediction (all independent variables)
-xPred = matrix(c(0,15,1,1,0,0,0,1,0,1,1,0,0,
-                 0,130,0,1,0,1,0,1,0,0,1,0,1), nrow = 2, ncol = 13, byrow = TRUE,
-               dimnames = list(c("pred1","pred2"),
-                               c("beta[1]","beta[2]","beta[3]","beta[4]","beta[5]",
-                                 "beta[6]","beta[7]","beta[8]","beta[9]","beta[10]",
-                                 "beta[11]","beta[12]","beta[13]")))
 
-# made up prediction (minus years in city, marital status)
-xPred2 = matrix(c(15,1,1,0,0,0,1,0,
-                  130,0,1,0,1,0,1,0), nrow = 2, ncol = 8, byrow = TRUE,
-               dimnames = list(c("pred1","pred2"),
-                               c("beta[1]","beta[2]","beta[3]","beta[4]","beta[5]",
-                                 "beta[6]","beta[7]","beta[8]")))
-
-
+# clean dataframe
 bf = readRDS("BlackFriday_Clean.rds")
 
 # all variables minus Purch_Avg
@@ -37,8 +23,14 @@ xName = names(bf)[-3]
 # all variables minus Purch_Avg, years in city, marital status
 xName2 = names(bf)[-c(1,3,11:14)]
 
-reg_chains = genMCMC(bf, xName = xName2, yName = "Purch_Avg",
-                     numSavedSteps = 100000, xPred = xPred2, thinSteps = 15)
+# get train and test data
+set.seed(123)
+random_rows = sample(nrow(bf),10)
+test_bf = as.matrix(bf[random_rows,-c(1,3,11:14)]) # keep only independent variables used in xName2
+train_bf = bf[-random_rows,]
+
+reg_chains = genMCMC(train_bf, xName = xName2, yName = "Purch_Avg",
+                     numSavedSteps = 100000, xPred = test_bf, thinSteps = 15)
 
 
 
@@ -56,4 +48,4 @@ plotMCMC( reg_chains , data=bf , xName=xName2 , yName="Purch_Avg" ,
           pairsPlot=TRUE , showCurve=FALSE )
 #------------------------------------------------------------------------------- 
 
-#saveRDS(reg_chains,file = "Chain Objects/Script2_100000steps_15thin_5000adapt_5000burn_xName2.rds")
+#saveRDS(reg_chains,file = "Chain Objects/Script2_100000steps_15thin_5000adapt_5000burn_xName2_TEST-TRAIN.rds")
