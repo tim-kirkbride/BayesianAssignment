@@ -38,9 +38,9 @@
   # Specify the model for standardized data:
   model {
   for ( i in 1:Ntotal ) {
-  zy[i] ~ dnorm( zbeta0 + zbeta[1] * x[i,1] + zbeta[2] * zx[i,2] + sum( zbeta[3:Nx] * x[i,3:Nx] ) , 1/zsigma^2 )
+  zy[i] ~ dnorm( zbeta0 + zbeta[1] * zx[i,1] + sum( zbeta[2:Nx] * x[i,2:Nx] ) , 1/zsigma^2 )
   }
-  # zy[i] ~ dnorm( zbeta0 + zbeta[1] * zx[i,1] + sum( zbeta[2:Nx] * x[i,2:Nx] ) , 1/zsigma^2 )
+  
   # Priors vague on standardized scale:
   zbeta0 ~ dnorm( muZ0 , 1/VarZ0 )  
   for ( j in 1:Nx ) {
@@ -56,8 +56,7 @@
   
   # Compute predictions at every step of the MCMC
   pred[1:Npred] <- beta0 + beta[1] * xPred[1:Npred,1] + beta[2] * xPred[1:Npred,2] + beta[3] * xPred[1:Npred,3] + beta[4] * xPred[1:Npred,4] 
-  + beta[5] * xPred[1:Npred,5] + beta[6] * xPred[1:Npred,6] + beta[7] * xPred[1:Npred,7] + beta[8] * xPred[1:Npred,8] + beta[9] * xPred[1:Npred,9]
-  + beta[10] * xPred[1:Npred,10] + beta[11] * xPred[1:Npred,11] + beta[12] * xPred[1:Npred,12] + beta[13] * xPred[1:Npred,13]
+  + beta[5] * xPred[1:Npred,5] + beta[6] * xPred[1:Npred,6] + beta[7] * xPred[1:Npred,7] + beta[8] * xPred[1:Npred,8]
   
   }
   
