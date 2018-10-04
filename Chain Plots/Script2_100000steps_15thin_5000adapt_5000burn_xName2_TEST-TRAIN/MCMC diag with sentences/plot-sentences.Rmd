@@ -1,0 +1,162 @@
+---
+title: "Applied Bayesian Statistics Final Project MCMC plots"
+author: "Jake Mott"
+date: "4 October 2018"
+output: pdf_document
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+
+pfolder <- "plots 3-10/"
+```
+
+# Beta MCMC Diagnostics
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Beta0_Diag.png", sep = ""))
+```
+
+Beta0 has very good diagnostic plots. It has very good representation with the first plot being almost entirely overlapping chains. The accuraccy is also very high with the range of the chains and the small MCSE of 1.54. Both the ACF and shrink factors show sharp decreases that level out close to 0 and 1 respectively, and with an ESS of 48992.9 it indicates that there is a moderately good level of independent information in teh autocorrelated chains.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Beta1_Diag.png", sep = ""))
+```
+
+Beta1's diagnostics show very similar results with Beta0. It has a similarly high representation but with a higher accuracy with a MCSE of just 0.000728. This is hinted at in the ESS being double at 99833.5 and shrink factor plot being almost completely flat after the initial fall.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Beta2_Diag.png", sep = ""))
+```
+
+Beta2 has equally as good diagnostic to Beta1 with a slightly higher MCSE of 0.374. It has good representation with the overlapping chains anf flat shrink factor. It's ESS is even hogher though at 100651.5.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Beta3_Diag.png", sep = ""))
+```
+
+Beta3 is following the trend of good representation with the overlapping chains, however it has a slightly rockier shrink factor that resembles Beta0. This is reflected in the effective sample size that is back down to 56843.8 and the MCSE up to 1.15.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Beta4_Diag.png", sep = ""))
+```
+
+Beta4 is close to Beta3 in it's acceptable representation but slightly rocky shrink factor. It's ESS is lower again at 54262.5 however it also has a lower MCSE at 0.9. The ACF is suitably flat after the first lag and the density plot follows the normal curve like the others.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Beta5_Diag.png", sep = ""))
+```
+
+Beta5 has similar results in the first plot and the ACF and density plots, all being acceptable. The standout here is the shrink factor that loks more rocky however has a smaller range with a peak at around 1.008 compared to 1.03 for previous plots. It's ESS is still low though at 56618.18 and a MCSE of 1.1.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Beta6_Diag.png", sep = ""))
+```
+
+Beta6 has a slightly better ESS at 62358.6 but still not close to around 100000, the highest so far. All plots are very similar again with good representation and indicating a high level of independent information in the autocorrelated chains. It has the highest MCSE so far with 1.6.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Beta7_Diag.png", sep = ""))
+```
+
+Beta7 shows good representation again with a solid drop in shrink factor and overlapping chains. It's ACF and desnity plot are also acceptable. It's ESS is still low however at 64790.4 and has the second highest MCSE at 1.67.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Beta8_Diag.png", sep = ""))
+```
+
+Beta8 comes in with the highest MCSE of 1.87. All it's plots however are acceptable and indicate good representatation and high level of independent information in the autocorrelated chains. The shrink factor and ACF drop off quickly and stay flat. The ESS of 69257.8 is somewhat low at 69257.8. 
+
+# Sigma MCMC Diagnostics
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Sigma_Diag.png", sep = ""))
+```
+
+The first plot for sigma shows very good representation with the overlapping chains. The ACF and shrink factor drop of immediately and stay almost completely flat, the ACF showing a very good ESS of 101326.7. This implies there is a very high level of independent information in the chains. The density plot follows a normal bell curve and the MCSE is very low at 0.0539, a very good result.
+
+# Prediction MCMC Diagnostics 
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Pred1_Diag.png", sep = ""))
+```
+
+Prediction 1 shows good diagnostics with the first plot showing heavily overlapping chains indicating high representation. The shrink factor has a very small range and drops off fast and stays low. The ACF indicates almost no autocorrelation between the chains with a similar shape. The ESS is somewhat middling at 73749.5, however it has a very low MCSE at 0.717.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Pred2_Diag.png", sep = ""))
+```
+
+Prediction 2 has similar plots to the first prediction with noticeable changes seen in the slightly larger variation early in the shrink factor. The MCSE is quite low at 0.621.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Pred3_Diag.png", sep = ""))
+```
+
+The diagnostics for prediction 3 are almost identical to prediction 2 with teh shrink factors ahring the same pattern. They have the exact same MCSE at 0.621 and a close ESS at 57233.2. It has good representation and very low autocorrelation in the chains.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Pred4_Diag.png", sep = ""))
+```
+
+Prediction 4 continues the similarities with almost identical plots again, the shrink factor having the same pattern and all other plots following the usual shapes and patters indication good results. The ESS is similar at 57697.4 and it shares the error of 0.621.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Pred5_Diag.png", sep = ""))
+```
+
+Prediction 5 shows a much better shaped shrink factor but with the larger range is actually worse. This is shown in the higher MCSE of 1.18. The plots show the usual good representation with overlapping chains and very little autocorrelation in the ACF. It has the highest ESS so far with 99875.4.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Pred6_Diag.png", sep = ""))
+```
+
+Prediction 6 has good representation and a bell curved density plot. The shrink factor is better despite the larger peaks compared to prediction 5 with a smaller range. The ACF is almost flat after the first lag with an ESS of 77765.7. The MCSE of 0.582 is the lowest yet for the predictions.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Pred7_Diag.png", sep = ""))
+```
+
+Prediction 7 has the highest error out of all predictions with a MCSE of 1.45. It shows good representation in the overlapping chains and acceptable shrink factor. The ACF indicated very low autocorrelation in the chains and has low ESS of 49654.2.  
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Pred8_Diag.png", sep = ""))
+```
+
+Prediction 8 has acceptabel plots with good representation indicated by the overlapping chains and mostly flat shrink factor. The ACF suggests low autocorrelation and has an ESS of 57653.3. The error of 0.634 only slightly higher than that of predictions 2, 3 and 4. 
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Pred9_Diag.png", sep = ""))
+```
+
+The overlapping chains and flat ACF and shrink fcator indicate prediction 9 has good representation and no autocorrelation. The ESS of 56892.1 is a little low with another similar MCSE of 0.626
+
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Pred10_Diag.png", sep = ""))
+```
+
+Prediction 10 has the second lowest MCSE of 0.587 and a middling ESS of 78714.5. The plots are acceptable with heavily overlapped chains and a flat ACF indicating good representation and low autocorrelation. The shrink factor again has a smaller range suggesting better performance similar to predictions 4 and 6.
+
+# Posterior Distributions
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Posterior1.png", sep = ""))
+```
+
+The intercept Beta0 has a mode of 6900 and a relatively small prediction interval with a range of (6200, 7540) suggesting a high level of confidence in the intercept value. Beta1 has a mode of -3.75 indicating  that every unit increase in Count reduces the average purchase amount by \$3.78 USD. It also has a small interval of (-4.2, 3.31). Beta2 has a mode of 1950 indicating that being male increases your avergae spend by \$1950 USD. It also has a small confined range of (1720, 2180). Beta3 to Beta8 have modes 670, 840, 1150, 1190, 1250 and 228 indicating the respective average purchase amounts in USD when in the ages of 18-25, 26-35, 36-45, 46-50, 51-55 amd 55+. It shows a general trend of increasing the apending amount the older you are excluding 55+.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Posterior2.png", sep = ""))
+```
+
+All the interval ranges except for Beta8 (55+) do not include 0 with all modes being somewhat in the middle. Beta8 small mode of 228 and range of (-720, 1210) brings it closest of the Beta coefficients to being insignificant. $R^2$ has mode 0.135 with a very small interval of (0.123, 0.147). This indicates a high levelk of confidence for this value which is quite low meaning only a small amount of variation is accounted for in the model.
+
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Posterior3.png", sep = ""))
+```
+```{r, out.width = "400px", echo=FALSE}
+include_graphics( paste(pfolder, "Posterior4.png", sep = ""))
+```
+
+All the predictions have modes between 7000-10000, the smallest being for prediction 5 at \$7040 USD and the largest for prediction 4 at \$9540 USD. They also have relatively small intervals, the largest being for prediction 5 with (6320, 7780) giving a range of 1460. This suggests that the model has the least amount of confidence for prediction 5, and is highly confident with most of the other predictions which have an average range of 692 in their intervals.
