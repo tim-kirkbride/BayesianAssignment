@@ -1,0 +1,73 @@
+---
+title: "Descriptive Tables for Dataset"
+author: "Jake Mott"
+date: "5 October 2018"
+output: pdf_document
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+library(readr)
+library(dplyr)
+library(magrittr)
+library(kableExtra)
+library(mlr)
+library(data.table)
+
+#read data
+bf<-as.data.table(read.csv("BlackFriday.csv"))
+
+#=========== Preprocessing ===============
+
+#drop unnecessary/ambiguous columns
+bf[ ,c("Product_ID","Occupation","City_Category",
+       "Product_Category_1","Product_Category_2","Product_Category_3") := NULL]
+
+#aggregate data to ensure unique user IDs
+bf[, `:=` (Count = .N, Purch_Avg = mean(Purchase), Purch_Sum = sum(Purchase)), by = User_ID]
+
+#remove original purchase column as well as duplicates
+bf[ ,c("Purchase") := NULL]
+bf<-subset(unique(bf), select= -User_ID)
+
+#saving dataset for visualisation + making marital stuts levels more interpretable
+bf_vis<-as.data.frame(bf)
+bf_vis$Marital_Status<-ifelse(bf_vis$Marital_Status == "1","Married","Not Married")
+
+#converting factors to binary
+setDT(bf)[, c(levels(bf$Gender), "Gender") := 
+                c(lapply(levels(Gender), function(x) as.integer(x == Gender)), .(NULL))]
+setDT(bf)[, c(levels(bf$Age), "Age") := 
+            c(lapply(levels(Age), function(x) as.integer(x == Age)), .(NULL))]
+setDT(bf)[, c(levels(bf$Stay_In_Current_City_Years), "Stay_In_Current_City_Years") := 
+            c(lapply(levels(Stay_In_Current_City_Years), function(x) as.integer(x == Stay_In_Current_City_Years)), .(NULL))]
+
+
+#removing base level column from each factor
+bf[ ,c("F","0-17","0") := NULL]
+```
+
+# Overall Description of Dataset, no binary columns
+
+```{r, echo=FALSE}
+
+samp2 <- summarizeColumns(bf_vis)
+
+kable(samp2, "latex", caption = "Summary of Black Friday dataset", booktabs = T, align = "c") %>% kable_styling(latex_options = c("striped", "scale_down", "hold_position"))
+```
+
+# Overall Description of Dataset, after binary columns
+
+```{r, echo=FALSE}
+
+samp1 <- summarizeColumns(bf)
+
+kable(samp1, "latex", caption = "Summary of Processed Black Friday dataset", booktabs = T, align = "c") %>% kable_styling(latex_options = c("striped", "scale_down", "hold_position"))
+```
+
+
+
+
+
+
+
