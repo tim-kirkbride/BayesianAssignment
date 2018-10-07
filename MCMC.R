@@ -65,7 +65,12 @@ model_predictions = summaryInfo[c("pred[1]","pred[2]","pred[3]","pred[4]",
 
 model_predictions = as.data.frame(cbind(test_bf[,2], model_predictions))
 colnames(model_predictions)[1:2] = c("Actual","Prediction") 
+rownames(model_predictions) = 1:10
 
+saveRDS(model_predictions,file = "desc_tables/pred_table.rds")
+         
 model_predictions$Error = model_predictions$Actual - model_predictions$Prediction
 
 MSE = mean(model_predictions$Error^2)
+
+MSE
