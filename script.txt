@@ -1,3 +1,37 @@
+
+Slide 1:
+Hi,
+I'm _ and I'm here with _, _ and _, and we're presenting our report
+on predicting Black Friday Sales via Bayesian Muliple Regression.
+
+Slide 2:
+For a quick overview, Black Friday is a shopping event which originated
+in the US. On black friday, retails have extended shopping hours and 
+offer sales on their items, which leads to high sales and often even 
+results in violence between shoppers and staff. As Black friday is associted
+with such high sales, we thought it would be interesting to try and 
+see if certain kinds of shoppers were more likely to spend more on average, 
+and whether we could predict sales based on this.
+
+Slide 3:
+Ulitmately, we attempted to fit a bayesian multiple regression to black friday 
+sales data in order to predict average sales per shopper. We began our
+analysis by preprocessing the data to get it into a usable format. We then
+investigated the cleaned data via descriptive and visual analysis. Following this,
+we constructed a bayesian model diagram and associated R/jags code to run MCMC simulations
+using non-informative prior information. Here, the data was split into
+training and test sets and the test data was used to generate predictions. 
+MCMC chain diagnostics were then checked and posterior distribtuions were interpreted. 
+Finally, the generated predictions were compared to the actual average sales values to 
+get a sense of model accuracy.
+
+Slide 4:
+The dataset we used was obtained from kaggle and can be accessed from the link here.
+With regards to processing, the data orginially had numerous observations which related to the same
+individuals, so the data was aggregated so that each individual was represented once. In doing so, the average 
+sales column (the response varaible) was created to represent each persons average spent. Lastly,
+all factor column levels were converted into individual binary dummy variables.
+
 ===SLIDE 9===
 
 The model that we used for analysis is shown in this model diagram. Here it can be seen that we were assuming that the prior distributions were non-informative
