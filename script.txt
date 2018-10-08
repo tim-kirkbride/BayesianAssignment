@@ -1,0 +1,26 @@
+===SLIDE 9===
+
+The model that we used for analysis is shown in this model diagram. Here it can be seen that we were assuming that the prior distributions were non-informative and that the 
+
+===SLIDE 10===
+
+With this diagram in mind, a model was created and run with the full set of independent variables provided in the dataset. After this initial run, non-significant predictors were identified and removed. 
+
+We then ran a new reduced model which will be the basis for all of the following results. For this final MCMC run, we used 100 000 iterations with a thinning of 15, as well as a burn in period of 5000 and 5000 adaption steps. 
+
+===SLIDE 11===
+
+This final model was then implemented through the code shown here.
+
+===SLIDE 12===
+
+We were very happy with the model diagnostics seen here with an example of the beta diagnostics shown here.
+
+We can see very good representation in the almost entirely overlapping chains. Other features of the model diagnostics that we pleased with are the accuracy of the model which can be seen in the extremely small MCSE value and the almost immediately flattening shrink factor and autocorrelation plots. 
+
+These results were not unique to just beta0 with all beta diagnostic plots showing similar outcomes
+
+===SLIDE 13===
+
+The sigma diagnostic plots also show very good results. Like the previous beta diagnostics the chains completely overlap, the shrink factor and autocorrelation immediately flatten and the density plot has a nearly perfect normal distribution. These results give us a high level of confidence in the model. 
+
