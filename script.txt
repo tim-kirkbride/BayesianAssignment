@@ -32,6 +32,24 @@ individuals, so the data was aggregated so that each individual was represented 
 sales column (the response varaible) was created to represent each persons average spent. Lastly,
 all factor column levels were converted into individual binary dummy variables.
 
+===SLIDE 5===
+The bottom table shows the dataset before binary transformations. Gender and age were factors with 2 and 7 different levels respectively. Count, the number of items bought during black Friday, averaged around 91 for each customer but had a median of 53 showing that a high item amount purchases skew the mean.
+
+The head of the dataset shows the transformed variables. The ages were broken down into their original binned factors ranging from 18-25 to 55+. Gender has become binary under M with 1 being male and 0 being female. Purch average is our response variable.
+
+===SLIDE 6===
+The histogram of average purchase price shows a clear resemblance to the normal distribution; however it slightly skews right showing that a relatively small amount of people spend very large amounts.
+
+In the box plot of average purchase price by gender we see a slightly higher median purchase amount for mean compared to women. Also, women appear to have more widely spread outliers that reach higher than any male purchase.
+
+===SLIDE 7===
+Average purchase price by age on the left shows a slight trend in purchase amounts that peaks around 34-45. Though there is little variance across these bins, 26-35, 51-55 and 55+ show larger reaches of outliers to higher purchase amounts.
+
+The plot on the right shows an unusual relationship. It suggests that the more transactions someone does the more average amounts they spend. This might mean that a lot of people spend similar amounts in total.
+
+===SLIDE 8===
+This visualisation shows average purchase amounts by count faceted by age and coloured by gender. It shows lower densities in the 0-17 and 55+ plots. Males appear to also spend more overall and that more men spend during black Friday. All age ranges show a similar relationship between average purchase amount and the number of transactions.
+
 ===SLIDE 9===
 
 The model that we used for analysis is shown in this model diagram. Here it can be seen that we were assuming that the prior distributions were non-informative
