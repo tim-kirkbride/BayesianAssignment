@@ -1,6 +1,6 @@
 ===SLIDE 9===
 
-The model that we used for analysis is shown in this model diagram. Here it can be seen that we were assuming that the prior distributions were non-informative and that the 
+The model that we used for analysis is shown in this model diagram. Here it can be seen that we were assuming that the prior distributions were non-informative
 
 ===SLIDE 10===
 
