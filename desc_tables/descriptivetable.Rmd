@@ -5,7 +5,7 @@ date: "5 October 2018"
 output: pdf_document
 ---
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, eval=FALSE}
 library(knitr)
 library(readr)
 library(dplyr)
@@ -49,7 +49,7 @@ bf[ ,c("F","0-17","0") := NULL]
 
 # Overall Description of Dataset, no binary columns
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 
 samp2 <- summarizeColumns(bf_vis)
 
@@ -58,7 +58,7 @@ kable(samp2, "latex", caption = "Summary of Black Friday dataset", booktabs = T,
 
 # Overall Description of Dataset, after binary columns
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 
 samp1 <- summarizeColumns(bf)
 
@@ -67,7 +67,26 @@ kable(samp1, "latex", caption = "Summary of Processed Black Friday dataset", boo
 
 
 
+```{r}
+library(knitr)
+library(readr)
+library(dplyr)
+library(magrittr)
+library(kableExtra)
+library(mlr)
+library(data.table)
+pred_table = readRDS("C:/Users/Arion/Desktop/Uni/Applied Bayesian Statistics/Final Project/BayesianAssignment/desc_tables/pred_table.rds")
+kable(pred_table, "latex", caption = "Predictions", booktabs = T, align = "c") %>% kable_styling(latex_options = c("striped", "scale_down", "hold_position"))
+```
 
+```{r}
+bf = readRDS("C:/Users/Arion/Desktop/Uni/Applied Bayesian Statistics/Final Project/BayesianAssignment/BlackFriday_Clean.rds")
+set.seed(123)
+random_rows = sample(nrow(bf),10)
+test_bf = bf[random_rows,-c(1,11:14)] # keep only independent variables used in xName2
+kable(test_bf, "latex", caption = "Test data", booktabs = T, align = "c") %>% kable_styling(latex_options = c("striped", "scale_down", "hold_position"))
+
+```
 
 
 
